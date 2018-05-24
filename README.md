@@ -13,7 +13,8 @@ generator. [Apache Ant](https://ant.apache.org/) is the build system.
 ## Installation
 
 Unless your SWI Prolog installation also placed the Java bindings into
-*/usr/lib64/swipl-jpl/*, you'll need to adjust the path in <build.xml>.
+*/usr/lib64/swipl-jpl/*, you'll need to adjust the path in [the build
+file](build.xml).
 
 Then, simply run
 
@@ -22,3 +23,11 @@ ant jar
 ```
 
 To create the package `build/modelicus.jar`.
+
+You can also execute
+
+```
+ant test
+```
+
+to run a short example from the [test directory](test).
