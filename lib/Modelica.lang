@@ -1,0 +1,211 @@
+<language
+  name="Modelica"
+  implementation="modelica.pl">
+    <types>
+        <type>Class</type>
+        <type>Model</type>
+        <type>Connector</type>
+        <type>Function</type>
+        <type>Block</type>
+        <type>Package</type>
+        <type>Record</type>
+        <type>Declaration</type>
+        <type>Definition</type>
+        <type>Equation</type>
+        <type>Modification</type>
+        <type>Expression</type>
+    </types>
+    <predicates>
+        <predicate name="class"
+          signature="Class"
+          signature_not="Model|Connector|Function|Block|Package|Record">
+            <variant name="class_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="class_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="class_find" negated="false" badness="2" instantiation="_"/>
+            <variant name="class_not_find" negated="true" badness="2" instantiation="_"/>
+        </predicate>
+        <predicate name="model"
+          signature="Model"
+          signature_not="Class|Connector|Function|Block|Package|Record">
+            <variant name="model_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="model_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="model_find" negated="false" badness="2" instantiation="_"/>
+            <variant name="model_not_find" negated="true" badness="2" instantiation="_"/>
+        </predicate>
+        <predicate name="connector"
+          signature="Connector"
+          signature_not="Class|Model|Function|Block|Package|Record">
+            <variant name="connector_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="connector_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="connector_find" negated="false" badness="2" instantiation="_"/>
+            <variant name="connector_not_find" negated="true" badness="2" instantiation="_"/>
+        </predicate>
+        <predicate name="function"
+          signature="Function"
+          signature_not="Class|Model|Connector|Block|Package|Record">
+            <variant name="function_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="function_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="function_find" negated="false" badness="2" instantiation="_"/>
+            <variant name="function_not_find" negated="true" badness="2" instantiation="_"/>
+        </predicate>
+        <predicate name="block"
+          signature="Block"
+          signature_not="Class|Model|Connector|Function|Package|Record">
+            <variant name="block_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="block_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="block_find" negated="false" badness="2" instantiation="_"/>
+            <variant name="block_not_find" negated="true" badness="2" instantiation="_"/>
+        </predicate>
+        <predicate name="record"
+          signature="Record"
+          signature_not="Class|Model|Connector|Function|Block|Package">
+            <variant name="record_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="record_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="record_find" negated="false" badness="2" instantiation="_"/>
+            <variant name="record_not_find" negated="true" badness="2" instantiation="_"/>
+        </predicate>
+        <predicate name="extends"
+          signature="Class|Model|Connector|Function|Block|Package|Record#Class|Model|Connector|Function|Block|Package|Record"
+          signature_not="Class|Model|Connector|Function|Block|Package|Record#Class|Model|Connector|Function|Block|Package|Record">
+            <variant name="extends_check" negated="false" badness="0" instantiation="!!"/>
+            <variant name="extends_by_sub" negated="false" badness="1" instantiation="!_"/>
+            <variant name="extends_find" negated="false" badness="3" instantiation="__"/>
+            <variant name="extends_not_check" negated="true" badness="0" instantiation="!!"/>
+            <variant name="extends_not_by_sub" negated="true" badness="1" instantiation="!_"/>
+            <variant name="extends_not_find" negated="true" badness="3" instantiation="__"/>
+        </predicate>
+        <predicate name="member"
+          signature="Class|Model|Connector|Function|Block|Package|Record#String#Declaration|Definition"
+          signature_not="Class|Model|Connector|Function|Block|Package|Record#String#Declaration|Definition">
+            <variant name="member_by_class_key" negated="false" badness="0" instantiation="!!_"/>
+            <variant name="member_by_class" negated="false" badness="1" instantiation="!__"/>
+            <variant name="member_by_key" negated="false" badness="2" instantiation="_!_"/>
+            <variant name="member_find" negated="false" badness="3" instantiation="___"/>
+            <variant name="member_not_by_class_key" negated="true" badness="0" instantiation="!!_"/>
+            <variant name="member_not_by_class" negated="true" badness="2" instantiation="!__"/>
+            <variant name="member_not_by_key" negated="true" badness="2" instantiation="_!_"/>
+            <variant name="member_not_find" negated="true" badness="3" instantiation="___"/>
+        </predicate>
+        <predicate name="equation"
+          signature="Class|Model|Connector|Function|Block|Package|Record#Equation"
+          signature_not="Class|Model|Connector|Function|Block|Package|Record#Equation">
+            <variant name="equation_check" negated="false" badness="0" instantiation="!!"/>
+            <variant name="equation_by_equation" negated="false" badness="2" instantiation="_!"/>
+            <variant name="equation_by_class" negated="false" badness="2" instantiation="!_"/>
+            <variant name="equation_find" negated="false" badness="3" instantiation="__"/>
+            <variant name="equation_not_check" negated="true" badness="0" instantiation="!!"/>
+            <variant name="equation_not_by_equation" negated="true" badness="2" instantiation="_!"/>
+            <variant name="equation_not_by_class" negated="true" badness="2" instantiation="!_"/>
+            <variant name="equation_not_find" negated="true" badness="3" instantiation="__"/>
+        </predicate>
+        <predicate name="flow"
+          signature="Declaration" signature_not="Declaration">
+            <variant name="flow_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="flow_find" negated="false" badness="3" instantiation="_"/>
+            <variant name="flow_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="flow_not_find" negated="true" badness="3" instantiation="_"/>
+        </predicate>
+        <predicate name="input"
+          signature="Declaration" signature_not="Declaration">
+            <variant name="input_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="input_find" negated="false" badness="3" instantiation="_"/>
+            <variant name="input_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="input_not_find" negated="true" badness="3" instantiation="_"/>
+        </predicate>
+        <predicate name="output"
+          signature="Declaration" signature_not="Declaration">
+            <variant name="output_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="output_find" negated="false" badness="3" instantiation="_"/>
+            <variant name="output_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="output_not_find" negated="true" badness="3" instantiation="_"/>
+        </predicate>
+        <predicate name="constant"
+          signature="Declaration" signature_not="Declaration">
+            <variant name="constant_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="constant_find" negated="false" badness="3" instantiation="_"/>
+            <variant name="constant_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="constant_not_find" negated="true" badness="3" instantiation="_"/>
+        </predicate>
+        <predicate name="parameter"
+          signature="Declaration" signature_not="Declaration">
+            <variant name="parameter_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="parameter_find" negated="false" badness="3" instantiation="_"/>
+            <variant name="parameter_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="parameter_not_find" negated="true" badness="3" instantiation="_"/>
+        </predicate>
+        <predicate name="variable"
+          signature="Equation#String" signature_not="Equation#String">
+            <variant name="variable_by_eq" negated="false" badness="0" instantiation="!_"/>
+            <variant name="variable_find" negated="false" badness="3" instantiation="__"/>
+            <variant name="variable_not_check" negated="true" badness="0" instantiation="!!"/>
+            <variant name="variable_not_by_var" negated="true" badness="3" instantiation="_!"/>
+            <variant name="variable_not_by_eq" negated="true" badness="4" instantiation="!_"/>
+            <variant name="variable_not_by_eq" negated="true" badness="5" instantiation="__"/>
+        </predicate>
+        <predicate name="modification"
+          signature="Declaration#Modification" signature_not="Declaration#Modification">
+            <variant name="modification_check" negated="false" badness="0" instantiation="!!"/>
+            <variant name="modification_by_decl" negated="false" badness="1" instantiation="!_"/>
+            <variant name="modification_by_modification" negated="false" badness="2" instantiation="_!"/>
+            <variant name="modification_find" negated="false" badness="3" instantiation="__"/>
+            <variant name="modification_not_check" negated="true" badness="0" instantiation="!!"/>
+            <variant name="modification_not_by_modification" negated="true" badness="2" instantiation="_!"/>
+        </predicate>
+        <predicate name="assignModification"
+          signature="Modification#Expression" signature_not="Modification#Expression">
+            <variant name="assign_modification_check" negated="false" badness="0" instantiation="!!"/>
+            <variant name="assign_modification_by_mod" negated="false" badness="1" instantiation="!_"/>
+            <variant name="assign_modification_by_expr" negated="false" badness="2" instantiation="_!"/>
+            <variant name="assign_modification_find" negated="false" badness="3" instantiation="__"/>
+            <variant name="assign_modification_not_check" negated="true" badness="0" instantiation="!!"/>
+            <variant name="assign_modification_not_by_expr" negated="true" badness="2" instantiation="_!"/>
+        </predicate>
+        <predicate name="typeOf"
+          signature="Declaration#Class|Model|Connector|Function|Block|Package|Record"
+          signature_not="Declaration#Class|Model|Connector|Function|Block|Package|Record">
+            <variant name="typeOf_by_decl" negated="false" badness="0" instantiation="!_"/>
+            <variant name="typeOf_find" negated="false" badness="3" instantiation="__"/>
+            <variant name="typeOf_not_check" negated="true" badness="0" instantiation="!!"/>
+            <variant name="typeOf_not_by_decl" negated="true" badness="2" instantiation="!_"/>
+            <variant name="typeOf_not_find" negated="true" badness="4" instantiation="__"/>
+        </predicate>
+        <predicate name="name"
+          signature="Class|Model|Connector|Function|Block|Package|Record#String"
+          signature_not="Class|Model|Connector|Function|Block|Package|Record#String">
+            <variant name="name_check" negated="false" badness="0" instantiation="!_"/>
+            <variant name="name_by_name" negated="false" badness="3" instantiation="_!"/>
+            <variant name="name_find" negated="false" badness="3" instantiation="__"/>
+            <variant name="name_not_check" negated="true" badness="0" instantiation="!!"/>
+            <variant name="name_not_by_name" negated="true" badness="3" instantiation="_!"/>
+        </predicate>
+        <predicate name="definition"
+          signature="Definition#Class|Model|Connector|Function|Block|Package|Record"
+          signature_not="Definition#Class|Model|Connector|Function|Block|Package|Record">
+            <variant name="definition_by_def" negated="false" badness="0" instantiation="!_"/>
+            <variant name="definition_find" negated="false" badness="3" instantiation="__"/>
+            <variant name="definition_not_check" negated="true" badness="0" instantiation="!!"/>
+            <variant name="definition_not_by_class" negated="true" badness="3" instantiation="_!"/>
+        </predicate>
+        <predicate name="inner"
+          signature="Definition|Declaration"
+          signature_not="Definition|Declaration">
+            <variant name="inner_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="inner_find" negated="false" badness="3" instantiation="_"/>
+            <variant name="inner_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="inner_not_find" negated="true" badness="3" instantiation="_"/>
+        </predicate>
+        <predicate name="outer"
+          signature="Definition|Declaration"
+          signature_not="Definition|Declaration">
+            <variant name="outer_check" negated="false" badness="0" instantiation="!"/>
+            <variant name="outer_find" negated="false" badness="3" instantiation="_"/>
+            <variant name="outer_not_check" negated="true" badness="0" instantiation="!"/>
+            <variant name="outer_not_find" negated="true" badness="3" instantiation="_"/>
+        </predicate>
+    </predicates>
+    <parser class="modelicus.config.Modelica" method="parseAST2"/>
+    <nameType signature="Class|Model|Connector|Function|Block|Package|Record"/>
+    <properties>
+        <property name="name" signature="Class|Model|Connector|Function|Block|Package|Record" class="modelica.ast.ClassDef" method="thisName"/>
+    </properties>
+</language>

@@ -1,0 +1,34 @@
+connector(Con) and
+	X=[ Memb | member(Con,_,Memb)
+		and flow(Memb) ]
+	and
+	Y=[ Memb | member(Con,_,Memb)
+		and not flow(Memb)
+		and not input(Memb)
+		and not output(Memb)
+		and not constant(Memb)
+		and not parameter(Memb)]
+    and X!=Y
+	=> "Faulty connector: ",name(Con),"(",X,",",Y,")";
+
+fun assigned(Var:[Declaration],Expr:[Expression]) =>
+    modification(Var,Mod) and assignModification(Mod,Expr);
+
+fun unknown(Model:[Model],Var:[Declaration]) =>
+    member(Model,_,Var) and typeOf(Var,Tp)
+    and (name(Tp,"Real") or name(Tp,"Integer") or name(Tp,"String"))
+    and not outer(Var)
+    and not assigned(Var,_);
+
+fun connectorFlowVar(Struc:[Class,Model],Var:[Declaration])
+    => member(Struc,_,Decl) and typeOf(Decl,Con)
+    and connector(Con) and member(Con,_,Var) and flow(Var);
+
+model(Mod) and connectorFlowVar(Mod,Var) => "Model ",name(Mod),": ",Var;
+
+model(Mod) and X=[ Var | connectorFlowVar(Mod,Var) ]
+    => "Model ",name(Mod)," has ",X," variables";
+
+unknown(Mod,Var) => name(Mod)," has unknown ",Var;
+
+C=[ Var | unknown(Mod,Var) ] => name(Mod)," has ",C," unknowns.";

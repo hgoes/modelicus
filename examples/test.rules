@@ -1,0 +1,18 @@
+
+fun subclass(A:[Class],B:[Class]) => extends(A,B) or (extends(A,X) and subclass(X,B));
+
+subclass(X,Y) => name(X)," is subclass of ",name(Y);
+
+equation(X,{x+y=0}) => name(X)," has the equation";
+
+member(Mod,Name,Mem) and typeOf(Mem,Tp) and flow(Mem) => name(Tp)," is used as flow variable in class ",name(Mod),"(",Name,")";
+
+X=[M | member('Right',_,M)] => "class Right has ",X," members.";
+
+[ M | model(M) or connector(M)] > 5 => "More than 5 models or connectors present!";
+
+connector(Con) and not forall [ member(Con,_,Mem) | flow(Mem) ] => "Not all members of ",name(Con)," are flows.";
+
+assignModification(Mod,Expr) and modification(Decl,Mod) => Decl," is being assigned to ",Expr;
+
+member(Mod,N1,El1) and member(Mod,N2,El2) and typeOf(El1,Tp) and typeOf(El2,Tp) and El1!=El2 => N1," and ",N2," share the same type in ",name(Mod);

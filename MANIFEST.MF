@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Created-By: Henning Guenther
+Main-Class: modelicus.Main
+Class-Path: antlr.jar jpl.jar
+

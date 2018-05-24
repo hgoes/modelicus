@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Modelicus">
+  <property name="lib.dir" value="lib"/>
+  
+  <path id="classpath">
+    <!-- <fileset dir="${lib.dir}" includes="*.jar"/> -->
+    <fileset dir="/usr/share/java" includes="**/*.jar"/>
+    <fileset dir="/usr/lib64/swipl-jpl" includes="**/*.jar"/>
+  </path>
+
+  <property name="build.dir" location="build"/>
+  <property name="doc.dir" location="doc"/>
+  <property name="src.dir" location="src"/>
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${build.dir}/modelica"/>
+    <mkdir dir="${build.dir}/modelica/parser"/>
+    <mkdir dir="${build.dir}/modelicus"/>
+    <mkdir dir="${build.dir}/modelicus/parser"/>
+    <mkdir dir="${doc.dir}"/>
+  </target>
+  <target name="clean">
+    <delete dir="${build.dir}"/>
+    <delete dir="${doc.dir}"/>
+  </target>
+  <target name="modelica_lexer" depends="init">
+    <antlr
+	target="${src.dir}/modelica/parser/ModelicaLexer.g"
+	outputdirectory="${build.dir}/modelica/parser"
+	/>
+  </target>
+  <target name="modelicus_lexer" depends="init">
+    <antlr
+	target="${src.dir}/modelicus/parser/ModelicusLexer.g"
+	outputdirectory="${build.dir}/modelicus/parser"
+	/>
+  </target>
+  <target name="modelica_parser" depends="modelica_lexer">
+    <antlr
+	target="${src.dir}/modelica/parser/ModelicaParser.g"
+	outputdirectory="${build.dir}/modelica/parser"
+	/>
+  </target>
+  <target name="modelicus_parser" depends="modelicus_lexer">
+    <antlr
+	target="${src.dir}/modelicus/parser/ModelicusParser.g"
+	outputdirectory="${build.dir}/modelicus/parser"
+	/>
+  </target>
+  <target name="compile" depends="modelica_parser,modelicus_parser">
+    <javac destdir="${build.dir}" debug="on" classpathref="classpath" includeantruntime="false">
+      <src path="${build.dir}"/>
+      <src path="${src.dir}"/>
+    </javac>
+    <!--<javac srcdir="${src.dir}" destdir="${build.dir}" debug="on"/>-->
+  </target>
+  <target name="jar" depends="compile">
+    <jar
+	destfile="${build.dir}/modelicus.jar"
+	basedir="${build.dir}"
+	includes="**/*.class"
+        manifest="MANIFEST.MF">
+    </jar>
+  </target>
+  <target name="doc" depends="modelica_parser">
+    <javadoc
+	destdir="${doc.dir}">
+      <packageset dir="${src.dir}"/>
+      <packageset dir="${build.dir}"/>
+    </javadoc>
+  </target>
+  <target name="test" depends="jar">
+    <java fork="true" classname="modelicus.Main">
+      <classpath>
+        <path refid="classpath"/>
+        <path location="${build.dir}/modelicus.jar"/>
+      </classpath>
+      <jvmarg value="-Djava.library.path=/usr/lib64/swipl-jpl/"/>
+      <arg value="examples/test.rules"/>
+      <arg value="examples/Test.mo"/>
+    </java>
+  </target>
+</project>
